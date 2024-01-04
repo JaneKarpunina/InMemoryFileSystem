@@ -5,6 +5,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.SpringComponent;
+import filesystem.model.FileSystemObject;
+import filesystem.model.Folder;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.context.annotation.Scope;
 
@@ -16,14 +18,46 @@ import org.springframework.context.annotation.Scope;
 public class MainView extends HorizontalLayout {
 
 
-    TreeView treeView;
+    TreeForm treeForm;
 
-    DocumentView documentView;
+    DocumentForm documentForm;
 
-    public MainView(TreeView treeView, DocumentView documentView) {
-        
+    public MainView(TreeForm treeForm, DocumentForm documentForm) {
+
+        this.treeForm = treeForm;
+        this.documentForm = documentForm;
+        configureTreeForm();
+        configureDocumentForm();
+        add(treeForm, documentForm);
+
     }
 
+    void configureTreeForm() {
+
+        treeForm.setWidth("25em");
+
+        treeForm.addOpenListener(this::openSystemObject);
+
+    }
+
+    private void openSystemObject(TreeForm.OpenEvent openEvent) {
+
+        FileSystemObject fileSystemObject = openEvent.getFileSystemObject();
+        documentForm.setName(fileSystemObject.getName());
+        documentForm.setParent(String.valueOf(fileSystemObject.getParent()));
+        documentForm.setAuthor(fileSystemObject.getAuthor());
+
+        if (fileSystemObject instanceof Folder)
+            documentForm.setIsFolder(true);
+        else documentForm.setIsFolder(false);
+
+
+    }
+
+
+    void configureDocumentForm() {
+
+    }
 
 
 

@@ -53,11 +53,11 @@
       </artifactId>
       <version>24.3.0</version>
     </dependency>
-    <dependency>
+    <!-- dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
       <version>3.2.1</version>
-    </dependency>
+    </dependency-->
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

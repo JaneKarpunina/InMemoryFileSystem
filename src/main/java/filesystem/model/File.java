@@ -7,5 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @TypeAlias("file")
 public class File extends FileSystemObject {
 
+    public File() {
+    }
+
+    public File(Integer id, String name, String author, Integer parent) {
+        super(id, name, author, parent);
+    }
+
 
 }

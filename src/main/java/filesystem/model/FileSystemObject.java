@@ -21,6 +21,18 @@ public abstract class FileSystemObject {
 
     String link;
 
+    Integer parent;
+
+    public FileSystemObject() {
+    }
+
+    public FileSystemObject(Integer id, String name, String author, Integer parent) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.parent = parent;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -69,16 +81,24 @@ public abstract class FileSystemObject {
         this.link = link;
     }
 
+    public Integer getParent() {
+        return parent;
+    }
+
+    public void setParent(Integer parent) {
+        this.parent = parent;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FileSystemObject that = (FileSystemObject) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(author, that.author) && Objects.equals(content, that.content) && Objects.equals(comment, that.comment) && Objects.equals(link, that.link);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(author, that.author) && Objects.equals(content, that.content) && Objects.equals(comment, that.comment) && Objects.equals(link, that.link) && Objects.equals(parent, that.parent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, author, content, comment, link);
+        return Objects.hash(id, name, author, content, comment, link, parent);
     }
 }
