@@ -14,6 +14,7 @@ import filesystem.model.Folder;
 import filesystem.repository.FileRepository;
 import filesystem.repository.FileSystemObjectRepository;
 import filesystem.repository.FolderRepository;
+import filesystem.service.FileSystemObjectService;
 import org.springframework.context.annotation.Scope;
 import org.vaadin.tatu.Tree;
 
@@ -24,25 +25,17 @@ import java.util.List;
 @Scope("prototype")
 public class TreeForm extends VerticalLayout {
 
-    FileRepository fileRepository;
 
-    FolderRepository folderRepository;
-
-    FileSystemObjectRepository fileSystemObjectRepository;
-
+    FileSystemObjectService fileSystemObjectService;
 
     Tree<FileSystemObject> tree = new Tree<>(this::createFileSystemObjectLabel);
 
     TextArea message = new TextArea("");
 
 
-    public TreeForm(FileRepository fileRepository,
-                    FolderRepository folderRepository,
-                    FileSystemObjectRepository fileSystemObjectRepository) {
+    public TreeForm(FileSystemObjectService fileSystemObjectService) {
 
-        this.fileRepository = fileRepository;
-        this.folderRepository = folderRepository;
-        this.fileSystemObjectRepository = fileSystemObjectRepository;
+        this.fileSystemObjectService = fileSystemObjectService;
 
 //        folderRepository.save(new Folder(1, "root folder 1",
 //                "author1", 0));
@@ -119,15 +112,12 @@ public class TreeForm extends VerticalLayout {
 
     public List<FileSystemObject> getRootSystemObjects() {
 
-        List<FileSystemObject> files = fileSystemObjectRepository.findByParent(0);
-
-        return files;
+        return fileSystemObjectService.findFileSystemObjectsByParent(0);
     }
 
     public List<FileSystemObject> getChildSystemObjects(FileSystemObject parent) {
 
-        List<FileSystemObject> files = fileSystemObjectRepository.findByParent(parent.getId());
-        return files;
+        return fileSystemObjectService.findFileSystemObjectsByParent(parent.getId());
     }
 
     private String createFileSystemObjectLabel(FileSystemObject item) {
